@@ -400,7 +400,7 @@ $(function(){
 <input type="button" value="Toeic_important389"  id="btn_389">
 <input type="button" value="Phone"  id="Phone_USER">
 <br>
-秒數輸入 : <input type="number" name = "timeinput">
+秒數輸入 : <input type="number" name = "timeinput" id="SecondControl">
 </form>
 
 
