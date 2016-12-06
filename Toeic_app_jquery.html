@@ -370,7 +370,7 @@ $(function(){
 
 
 <body>
-
+<div id="MainPart">
 <h1> 會先顯示英文，兩秒後再跳出中文 </h1>
 <h1 id="UIRange"><strong><em>請先設定複習範圍</em></strong></h1>
 <table style = "font-size:25px;" width = "600"  height= "600" border="1">
@@ -394,18 +394,20 @@ $(function(){
 
 
 <form >
-<input type="button" value="Start" id="btn_Start">
-<input type="button" value="Stop"  id="btn_Stop">
-<input type="button" value="SendRange"  id="btn_Range">
-<input type="button" value="Toeic_840"  id="btn_820">
-<input type="button" value="Toeic_important389"  id="btn_389">
-<input type="button" value="Phone"  id="Phone_USER">
+<div id="div_btn">
+<input type="button" value="Start" id="btn_Start" class="btn_class">
+<input type="button" value="Stop"  id="btn_Stop" class="btn_class">
+<input type="button" value="SendRange"  id="btn_Range" class="btn_class">
+<input type="button" value="Toeic_840"  id="btn_820" class="btn_class">
+<input type="button" value="Toeic_important389"  id="btn_389" class="btn_class">
+<input type="button" value="Phone"  id="Phone_USER" class="btn_class">
 <br>
-秒數輸入 : <input type="number" name = "timeinput" id="SecondControl">
+<h1>秒數輸入 : <input type="number" name = "timeinput" id="SecondControl"> </h1>
+</div>
 </form>
 
 
-
+</div>
 
 
 
