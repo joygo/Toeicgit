@@ -167,9 +167,9 @@ $(function(){
 		+"<input type='checkbox'  value='7' name='range'><font size= '2'>700~840</font><br>")
 		.insertAfter("#CheckboxChoose");
 		
-		$.get("ReadToeic.php",{TOEIC_TYPER : "0"},function(data){
+		$.get("../ReadToeic.php",{TOEIC_TYPER : "0"},function(data){
 			
-			$("#CheckboxChoose").hide();
+			
 			var array = data.split(",");
 			for(var i=0;i<820;i++)
 			{
@@ -180,9 +180,9 @@ $(function(){
 		});
 		
 		
-		$.get("ReadToeic.php",{TOEIC_TYPER : "1"},function(data){
+		$.get("../ReadToeic.php",{TOEIC_TYPER : "1"},function(data){
 			
-			$("#CheckboxChoose").hide();
+		
 			var array = data.split(",");
 			for(var i=0;i<820;i++)
 			{
@@ -218,7 +218,7 @@ $(function(){
 		
 		$.get("../ReadToeic.php",{TOEIC_TYPER : "10"},function(data){
 			
-			$("#CheckboxChoose").hide();
+		
 			var array = data.split(",");
 			for(var i=0;i<389;i++)
 			{
@@ -231,7 +231,7 @@ $(function(){
 		
 		$.get("../ReadToeic.php",{TOEIC_TYPER : "11"},function(data){
 			
-			$("#CheckboxChoose").hide();
+			
 			var array = data.split(",");
 			for(var i=0;i<389;i++)
 			{
@@ -275,7 +275,12 @@ $(function(){
 		speechSynthesis.speak(msg);
 
 	});
-	
+
+	$("#ToTranslater").click(function(){
+
+	window.location = 'http://127.0.0.1/Toeic/Toeicgit/Translate.html';
+
+	});
 	
 	
 	//---------------function
@@ -371,7 +376,7 @@ $(function(){
 	 		DataInRange[r2]=temp;
 	 	}
 
-	 	alert(NumRange);
+	 
 
 
 	 }
@@ -390,6 +395,7 @@ $(function(){
 
 <body>
 <div id="MainPart">
+<input type="button" id="ToTranslater" value="跳轉至翻譯">
 <h1> 會先顯示英文，兩秒後再跳出中文 </h1>
 <h1 id="UIRange"><strong><em>請先設定複習範圍</em></strong></h1>
 <table style = "font-size:25px;" width = "600"  height= "600" border="1">

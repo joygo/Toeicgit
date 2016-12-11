@@ -217,7 +217,7 @@ $(function(){
 		
 		$.get("../ReadToeic.php",{TOEIC_TYPER : "10"},function(data){
 			
-			$("#CheckboxChoose").hide();
+			//$("#CheckboxChoose").hide();
 			var array = data.split(",");
 			for(var i=0;i<389;i++)
 			{
@@ -230,15 +230,14 @@ $(function(){
 		
 		$.get("../ReadToeic.php",{TOEIC_TYPER : "11"},function(data){
 			
-			$("#CheckboxChoose").hide();
+			
 			var array = data.split(",");
 			for(var i=0;i<389;i++)
 			{
 				list[i][1]=array[i];
 			
 			}
-			
-			
+		
 			
 			
 		});
@@ -249,7 +248,8 @@ $(function(){
 		
 		}
 		
-		
+			
+			$("h1").hide();
 	});
 	
 	
@@ -384,7 +384,7 @@ $(function(){
     <td width = "200"  height= "200"  id="eng" align="center">請選擇範圍</td>
 	<td width = "200"  height= "200"  id="cn" align="center">請選擇範圍</td>
 	<td width = "200"  height= "200"  id="choose" align="center">
-		<form  id="CheckboxChoose">
+		<form  id="CheckboxChoose">a
 		
 		</form>
 		

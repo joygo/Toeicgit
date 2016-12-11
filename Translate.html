@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script type="text/javascript"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+	<script>
+       //Jquery_start
+       $(function(){
+
+       	$("#btnToToeic").click(function()
+       	{
+       		window.location = 'http://127.0.0.1/Toeic/Toeicgit/Toeic_app_jquery.html';
+
+       	});
+
+       	
+       	$("#btn_translate").click(function()
+       	{
+
+       		InputString = $("#str_inputEN").val();
+
+       		
+       		$.post("../Translate.php",{DATA:InputString },function(data,status){
+			
+       			$("#str_outputCN").val(data.trim());   //trim() 去除空白
+
+       		$.post("../StoreMysql.php",{EN:InputString,CN: data.trim()},function(data,status){
+
+       			 alert(data);
+
+       		});
+
+
+       		});
+
+
+
+       		 
+
+       	});
+
+
+
+       });
+
+
+	</script>
+
+	<style type="text/css">
+	 #str_inputEN {width:200px; height :60px;  text-align: center;  }	
+	 #str_outputCN{width:200px; height :60px;  text-align: center; }
+	</style>
+</head>
+<body>
+<div>
+<input type="button" value="Toeic練習" id="btnToToeic">
+</div>
+<div >
+<h1 id ="Title">請輸入翻譯</h1>
+<p>英文輸入 <input type="text" id="str_inputEN" ></p>
+<p>中文翻譯 <input type="text" id="str_outputCN"></p>
+<input type="button" value="送出" id="btn_translate">
+<input type="button" value="送入資料庫" id="btn_Mysql">
+</div>
+</body>
+</html>
