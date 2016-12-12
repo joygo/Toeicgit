@@ -141,6 +141,7 @@ $(function(){
 		}
 		NumCount=checked.length*100;
 		NumRange=NumCount+Extra;
+		//Start_random
 		Start_Num= Math.floor((Math.random() * NumRange)+1);
 		console.log((NumRange));
 		alert("你所選範圍是第"+checked+"部分");
@@ -317,17 +318,18 @@ $(function(){
 	 
 	 //Change_rate =  Math.floor((Math.random() * 5)+1);
 	 Change_rate = 1;
-	 console.log(Change_rate);
+	 
 	 
      if(Start_Num+Change_rate<NumRange)	 
 	 {  
 		Start_Num=Start_Num+Change_rate;
+		console.log(Start_Num);
 		$("#eng").html(DataInRange[Start_Num][0]);
        
 	 }
 	 else
 	 {
-	    Start_Num=Math.floor((Math.random() * NumRange));
+	    Start_Num=0;
 	    Random_Word();	
 		$("#eng").html(DataInRange[Start_Num][0]);
 		

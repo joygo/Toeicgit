@@ -8,6 +8,14 @@
        //Jquery_start
        $(function(){
 
+
+       	//variable
+
+       	var en;
+       	var cn;
+
+       	//
+
        	$("#btnToToeic").click(function()
        	{
        		window.location = 'http://127.0.0.1/Toeic/Toeicgit/Toeic_app_jquery.html';
@@ -22,24 +30,30 @@
 
        		
        		$.post("../Translate.php",{DATA:InputString },function(data,status){
-			
-       			$("#str_outputCN").val(data.trim());   //trim() 去除空白
+				
+				en=InputString;
+				cn=data.trim();
+       			$("#str_outputCN").val(cn);   //trim() 去除空白
 
-       		$.post("../StoreMysql.php",{EN:InputString,CN: data.trim()},function(data,status){
-
-       			 alert(data);
-
-       		});
-
+       		
 
        		});
 
 
-
-       		 
+       		});
+  		 
 
        	});
 
+       	$("#btn_Mysql").click(function()
+		{
+
+			$.post("../StoreMysql.php",{EN:InputString,CN: data.trim()},function(data,status){
+
+       			 alert(data);
+
+
+       	})
 
 
        });
