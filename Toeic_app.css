@@ -1,5 +1,5 @@
 @charset "utf-8";
-h1 { color: red;}
+h1 { color: red; word-spacing: 2px;}
 body {background: black;}
 tr td { color: lightseagreen; }
 
