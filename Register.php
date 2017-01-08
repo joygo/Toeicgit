@@ -95,9 +95,9 @@ function Decode_input($data) {
  <p><span>*<span>代表必填</p>
  <form method="post" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
 
- 姓名:<input type="text" name="ID"><span>*<?php echo $IDError; ?></span><br> 
- 帳號:<input type="text" name="account"><span>*<?php echo $accountError; ?></span><br> 
- 密碼:<input type="text" name="password"><span>*<?php echo $passwordError; ?></span><br> 	
+ 姓名:<input type="text" name="ID" autocomplete="off"><span>*<?php echo $IDError; ?></span><br> 
+ 帳號:<input type="text" name="account" autocomplete="off"><span>*<?php echo $accountError; ?></span><br> 
+ 密碼:<input type="password" name="password" autocomplete="off"><span>*<?php echo $passwordError; ?></span><br> 	
  性別:<span>*<?php echo $genderError; ?></span><br>
       <input type="radio" name="gender" value=female>女性
   	   <input type="radio" name="gender" value=male>男性<br>
