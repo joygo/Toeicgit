@@ -1,9 +1,233 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
 	<title>Google Map</title>
+	<style type="text/css">
+	#GoogleMap {float:left; height: 550px; width: 550px;}
+	</style>
+	<script src ="http://maps.google.com/maps/api/js?sensor=false"></script> 
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+	<script>
+
+$(function(){
+
+	var Message = "";
+	var zoomFactor = 10;
+	var marker ;
+	var map;
+	if(navigator.geolocation){
+	   navigator.geolocation.getCurrentPosition(DisplayLocation,DisplayError);
+	   $("#zoomFactor").val(zoomFactor);
+	}
+
+	$("#btn_ChangePosition").click(function(){
+
+		if(Math.abs($("#input_longitude").val())>180||Math.abs($("#input_latitude").val())>90)
+		{
+			alert("error value");
+		}
+		else if(Math.abs($("#input_longitude").val())==0&&Math.abs($("#input_latitude").val())==0)
+		{
+			alert("empty,please value");
+		}
+		else
+		{		
+			 latlng = new google.maps.LatLng($("#input_latitude").val(),
+			 								 $("#input_longitude").val());
+			 map.panTo (latlng);	
+			 marker.setMap(null);
+			 var coords = new Object();
+			 coords.longitude=$("#input_longitude").val();
+			 coords.latitude=$("#input_latitude").val();
+			 AddMarker(latlng,coords);
+			
+		}
+
+
+	});
+
+
+	$("#btn_zoomIn").click(function(){
+
+		if(zoomFactor>1)
+		{
+			$("#zoomFactor").val(--zoomFactor);
+			map.setZoom(zoomFactor);
+
+		}
+	});
+
+	$("#btn_zoomOut").click(function(){
+
+		if(zoomFactor<20)
+		{
+			$("#zoomFactor").val(++zoomFactor);
+			map.setZoom(zoomFactor);
+		}
+
+	});
+
+
+	$("#Return").click(function(){
+
+		window.location = 'http://127.0.0.1/Toeic/Toeicgit/';
+
+	});
+
+
+
+	//---------------function---------------------//
+
+
+
+	function DisplayLocation(position)
+	{		
+		var longitude = position.coords.longitude;
+		var latitude  = position.coords.latitude;
+
+		Message = "你所在的經度 : " + Format(longitude,3) +"度 , "
+				+ "你所在的緯度 : " + Format(latitude,3)  +"度<br>";
+
+		
+		$("#Location").html(Message);
+
+		ShowMap(position.coords);
+
+	}
+
+	function DisplayError(error)
+	{
+		var ErrorType =
+		{
+			0: "Unknown error",
+		    1: "Permission denied",
+	 	    2: "Position is not available",
+	        3: "Request timeout"
+		}
+
+		var ErrorMessage = ErrorType[error.code];
+		$("#Location").html(ErrorMessage);
+
+		navigator.geolocation.getCurrentPosition(DisplayLocation, 
+   	  	DisplayError, {enableHighAccuracy: true});
+
+	}
+
+	function ShowMap(coords)
+	{	
+	var latlng = new google.maps.LatLng(coords.latitude, coords.longitude);
+	var mapOpts = {
+	  zoom: 13,
+	  center: latlng,
+	  mapTypeId: google.maps.MapTypeId.ROADMAP,
+	  navigationControl: false 		, // 隱藏導覽控制項
+	  mapTypeControl: true		// 隱藏地圖類型控制項
+	};
+
+	//需要將 jquery 物件為 object object 轉為 html object，才能用DOM的操作
+	var mapDiv = document.getElementById("GoogleMap");
+	 map = $("#GoogleMap").get(0);
+	 map = new google.maps.Map(map, mapOpts);
+	AddMarker(latlng,coords);
+	map.setZoom(zoomFactor);
+
+	}
+
+
+
+	function AddMarker(latlng , coords)
+	{
+		var markeroptions=
+		{
+			position: latlng,
+			map: map,
+			clickable: true
+		};
+
+		 marker = new google.maps.Marker(markeroptions);
+
+		var content ="您所在的位置<br>經度: " +Format(coords.longitude,3)+
+		", 緯度: " + Format(coords.latitude,3);
+
+		var infoWindowOptions =
+		{
+			content:content,
+			position: latlng
+		};
+
+		var infoWindow = new google.maps.InfoWindow(infoWindowOptions);
+
+		google.maps.event.addListener(marker,"click",function(){
+
+			  infoWindow.open(map);
+		});
+	}
+
+
+	function Format(number,decplaces)
+	{
+		var temp = String(number);
+		//也可先宣告是，之後用字串+去合成字串，會自動將數值轉字串
+		// var temp = ""+Math.round(number*Math.pow(10,decplaces));  
+		var pointposition = String(temp).indexOf(".");
+
+		if(pointposition<0)
+		{
+			temp = temp;
+		}
+		else
+		{
+		temp = temp.substring(0,pointposition)+"."+temp.substring(pointposition+1,
+			pointposition+decplaces+1);
+		}
+		return temp;
+
+	}
+	
+
+});
+		
+
+
+	</script>
 </head>
 <body>
+<div id="Location"></div>
+<div id="GoogleMap"></div>
+<div id="MapSelection">
+	<form>
+		<table>
+			<tr>
+				<td><label class="title">輸入座標</label></td>
+				<td><label>經度: <input type="text" id="input_longitude"  size="5"></label></td>
+				<td><label>緯度: <input type="text" id="input_latitude" 
+				size="5"></label></td>
+				<td><label>改變位置 <input type="button" id="btn_ChangePosition" value="更新"></label></td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+        		<td><label class="title">地圖縮放比例</label></td>
+        		<td><input type="button" class="zoom" id="btn_zoomIn"
+          		title="地圖縮小1倍" value="<"></td>
+        		<td><input type="text" id="zoomFactor" title="目前的地圖縮放比例" 
+          		size="2" maxlength="2" readonly></td>
+        		<td><input type="button" class="zoom" id="btn_zoomOut" 
+          		title=" 地圖放大1倍" value=">"></td>
+      		</tr>
+
+      		<tr>
+      			<td><input type="button" id="Return" value="回首頁"></td>
+      			
+      		</tr>
+
+		</table>
+
+	</form>
+
+
+</div>
 
 </body>
 </html>

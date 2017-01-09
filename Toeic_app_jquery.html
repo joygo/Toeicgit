@@ -282,9 +282,18 @@ $(function(){
 	window.location = 'http://127.0.0.1/Toeic/Toeicgit/Translate.html';
 
 	});
+
+
+	$("#Return").click(function(){
+
+              window.location = 'http://127.0.0.1/Toeic/Toeicgit/';
+
+    
+    });	
 	
-	
-	//---------------function
+
+
+	//---------------function---------------------//
 	
 	
   function GetCheckedValue1(checkBoxName)
@@ -398,6 +407,7 @@ $(function(){
 <body>
 <div id="MainPart">
 <input type="button" id="ToTranslater" value="跳轉至翻譯">
+<input type="button" id="Return" value="回首頁">
 <div id ="Div_Tittle">
 <header>會先顯示英文，兩秒後再跳出中文</header>
 <h1 id="UIRange"><strong><em>請先設定複習範圍</em></strong></h1>
