@@ -8,8 +8,45 @@
 		
 		$(function()
 		{
-			$("#Login").click(function(){
-				alert($("input[name='Account']").val());
+			$("#Login").click(function()
+			{
+				
+
+
+				$.post("../Loginphp.php",
+					{UserAccount:$("input[name='Account']").val(),
+					 UserPassword:$("input[name='Password']").val()},function(data)
+					{
+
+						var array = data.split(",");
+
+						if(array[0]=="error")  
+						{
+							alert("密碼有誤");
+						}
+						else if(array[0]=="nodata")
+						{
+							
+							alert("帳號不存在");
+
+						}
+						else
+						{
+
+							
+
+							sessionStorage.setItem("LoginFlag","ok");
+							sessionStorage.setItem("UserName",array[1]);
+							sessionStorage.setItem("UserListNum",array[3]);
+							if(array[2]=='male') array[2]="先生";
+							else array[2]="小姐";
+							sessionStorage.setItem("UserGender",array[2]);
+							sessionStorage.setItem("UserListName",array[4]);
+							window.location = 'http://127.0.0.1/Toeic/Toeicgit';
+						}
+					});
+
+
 
 			});
 			
@@ -29,7 +66,7 @@
 	<legend>請輸入帳號密碼</legend>
 	<form name="logindata">
 	<label>帳號:</label><input type="text" name="Account"><br><br>
-	<label>密碼:</label><input type="text" name="Password"><br><br>
+	<label>密碼:</label><input type="password" name="Password"><br><br>
 	<input type="button" name="submit" value="登入" id="Login">
 	</form>
 	</fieldset>

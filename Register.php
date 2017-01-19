@@ -61,6 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $_SESSION['Account']=$account;
     $_SESSION['Password']=$password;
     $_SESSION['Gender']=$Gender;
+    $_SESSION['List']="0";
 
    require_once('../LoadRegister.php');
    

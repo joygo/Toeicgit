@@ -12,11 +12,37 @@
 
 
        	//variable
-
+              var UserName = "訪客";
+              var UserGender = "先生/小姐";
        	var en;
        	var cn;
-
+              var ListFlaf=false;
        	//
+
+              //-----------------initial
+
+              UserName = sessionStorage.getItem("UserName")
+              UserGender = sessionStorage.getItem("UserGender");
+
+              $("#user").html(UserName+" "+UserGender+"歡迎使用翻譯");
+
+               if(sessionStorage.getItem("UserListName")!='null')
+              {
+                var ListName = sessionStorage.getItem("UserListName").split("/");
+                var count=ListName.length;
+                var i=0;
+                for(i=0;i<count-1;i++)
+                {
+                 $("#UserList").append("<option value='ListName'>"+ListName[i]+"</option>");
+               
+                }  
+              }
+              else
+              {
+                     alert("尚未有建立表單，請建立新表單");
+
+              }
+              //-----------------initial
 
        	$("#btnToToeic").click(function()
        	{
@@ -50,14 +76,48 @@
               {       
                      en = $("#str_inputEN").val();
                      cn = $("#str_outputCN").val();
-                     $.post("../StoreMysql.php",{EN:en , CN:cn },function(data,status){
+                     if(ListFlaf==true)
+                     {
+                            $.post("../StoreMysql.php",{EN:en , CN:cn },function(data,status){
                      
-                     alert("成功送入資料庫");
+
+                             alert("成功送入資料庫");
+
+                            });
+
+                     }
+                     else
+                     {
+                            alert("請選擇表單");
+                     }
+
+              });
+
+              // 新增表單
+              $("#addnewlist").click(function(){
+
+                     //------------
+                     //在html中 字串多使用" " 因此在javascript中 為了方便不加上跳脫
+                     //字元，會使用單引號，一般來說效果相同，只是在html中規則使用到""
+                     //的時候不需要轉譯，如下使用方法
+                     //------------
+                     $("#addlisttext").append( '<p>請輸入表單名子 :'+'<input type="text" id="NewListName" >'+'<input type="button" id="SendNewList" value="送出">');
+  
+              });
+
+              //送出新增表單  需要用on的方法，才能將append在父元素的資料激活
+              $("#addlisttext").on('click','#SendNewList',function(){
+
+
+                     //alert($("#NewListName").val());
+
+                      $.post("../StoreMysql.php",{AddNewList:$("#NewListName").val() },function(data,status)
+                     {
+
+                            alert(data);
 
                      });
-
-
-
+                     
               });
 
 
@@ -83,11 +143,25 @@
 <input type="button" id="Return" value="回首頁" >
 </div>
 <div >
-<h1 id ="Title">請輸入翻譯</h1>
+<style type="text/css">
+       h1 {color : red;}
+</style>
+<h1 id ="user"></h1>
+<h2 id ="Title">請輸入翻譯</h2>
 <p>英文輸入 <input type="text" id="str_inputEN" ></p>
 <p>中文翻譯 <input type="text" id="str_outputCN"></p>
+<div>
+<label>已建立的表單:
+<select id ="UserList">  
+
+</select>
+</div>
 <input type="button" value="送出" id="btn_translate">
 <input type="button" value="送入資料庫" id="btnMysql">
+<input type="button" value="新增表單" id="addnewlist">
+<input type="button" value="選定此表單" id="SelectList">
+</div>
+<div id="addlisttext">
 </div>
 </body>
 </html>

@@ -6,9 +6,33 @@
 	<style>
 	body {background-color: #EBE2DA; margin: 0 auto;}
 	</style>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
   <script type="text/javascript">
+  var UserName = "訪客";
+  var UserGender = "先生/小姐";
+   $(function()
+   { 
+    if(sessionStorage.getItem("UserName"))
+    {
+     UserName = sessionStorage.getItem("UserName");
+     UserGender = sessionStorage.getItem("UserGender");
+    }
+    $("#user").html(UserName +" " +UserGender+" 你好 ! ");
+
+
+    $("#logout").click(function(){
+       sessionStorage.clear();
+       sessionStorage.setItem("UserName","訪客");
+       sessionStorage.setItem("UserGender","先生/小姐");
+       UserName = sessionStorage.getItem("UserName")
+       UserGender = sessionStorage.getItem("UserGender");
+       $("#user").html(UserName + UserGender+" 你好 ! ");
     
-    
+
+    });
+
+   });
+   
 
   </script>
 </head>
@@ -28,6 +52,7 @@
   <nav>
  	<a href="http://127.0.0.1/Toeic/Toeicgit/Register.php">註冊會員</a>
  	<a href="http://127.0.0.1/Toeic/Toeicgit/Login.html">登入會員</a>
+  <a href="." id="logout">會員登出</a>
   </nav>
  </header>
 
