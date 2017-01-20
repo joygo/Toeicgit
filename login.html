@@ -11,7 +11,7 @@
 			$("#Login").click(function()
 			{
 				
-
+				sessionStorage.setItem("UserAccount",$("input[name='Account']").val());
 
 				$.post("../Loginphp.php",
 					{UserAccount:$("input[name='Account']").val(),

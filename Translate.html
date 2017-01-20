@@ -12,11 +12,13 @@
 
 
        	//variable
-              var UserName = "訪客";
-              var UserGender = "先生/小姐";
+        var UserName = "訪客";
+        var UserGender = "先生/小姐";
+        var SelectList ="";
        	var en;
        	var cn;
-              var ListFlaf=false;
+        var ListFlag=false;
+
        	//
 
               //-----------------initial
@@ -26,22 +28,25 @@
 
               $("#user").html(UserName+" "+UserGender+"歡迎使用翻譯");
 
-               if(sessionStorage.getItem("UserListName")!='null')
+               if(sessionStorage.getItem("UserListName").split("/").length>1)
               {
                 var ListName = sessionStorage.getItem("UserListName").split("/");
                 var count=ListName.length;
                 var i=0;
                 for(i=0;i<count-1;i++)
                 {
-                 $("#UserList").append("<option value='ListName'>"+ListName[i]+"</option>");
-               
+                  //利用append得時候需要寫入變數，可以將字串分開來寫，利用+的方法
+                  //把字串分開來表示，就可以使用到變數，不然寫在""裡面會變一般的字串
+                  //非變數
+                 $("#UserList").append('<option value="ListName">'+ListName[i]+'</option>');
                 }  
               }
               else
               {
-                     alert("尚未有建立表單，請建立新表單");
+                    alert("尚未有建立表單，請建立新表單");
 
               }
+
               //-----------------initial
 
        	$("#btnToToeic").click(function()
@@ -76,9 +81,11 @@
               {       
                      en = $("#str_inputEN").val();
                      cn = $("#str_outputCN").val();
-                     if(ListFlaf==true)
+                     if(ListFlag==true)
                      {
-                            $.post("../StoreMysql.php",{EN:en , CN:cn },function(data,status){
+                            $.post("../StoreMysql.php",{EN:en , CN:cn, 
+                              ConnetDB:sessionStorage.getItem("UserAccount"),
+                              SelectList:SelectList},function(data,status){
                      
 
                              alert("成功送入資料庫");
@@ -101,7 +108,7 @@
                      //字元，會使用單引號，一般來說效果相同，只是在html中規則使用到""
                      //的時候不需要轉譯，如下使用方法
                      //------------
-                     $("#addlisttext").append( '<p>請輸入表單名子 :'+'<input type="text" id="NewListName" >'+'<input type="button" id="SendNewList" value="送出">');
+                     $("#addlisttext").append( '<p style ="color:red">請輸入表單名子(請勿用數字開頭) : '+'<input type="text" id="NewListName" >'+'<input type="button" id="SendNewList" value="送出">');
   
               });
 
@@ -111,13 +118,30 @@
 
                      //alert($("#NewListName").val());
 
-                      $.post("../StoreMysql.php",{AddNewList:$("#NewListName").val() },function(data,status)
+                      $.post("../StoreMysql.php",{AddNewList:$("#NewListName").val(),
+                        ConnetDB:sessionStorage.getItem("UserAccount") },function(data,status)
                      {
 
-                            alert(data);
-
+                            alert("新增完成請重新登入");
+                            window.location = 'http://127.0.0.1/Toeic/Toeicgit/';
                      });
                      
+              });
+
+              $("#SelectList").click(function(){
+
+               SelectList = $("#UserList option:selected").text();
+               if(SelectList!="")
+               {
+               alert("你選定的表單為: "+SelectList);
+               ListFlag=true;
+               }
+               else
+               {
+                alert("你尚未建立表單");
+               }
+
+
               });
 
 
